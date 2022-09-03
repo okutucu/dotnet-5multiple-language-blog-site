@@ -33,6 +33,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             return PartialView("_CategoryAddPartial");
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(CategoryAddDto categoryAddDto)
         {
@@ -55,6 +56,17 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             });
             return Json(categoryAddAjaxErrorModel);
 
+        }
+
+        public async Task<JsonResult> GetAllCategories()
+        {
+            var result = await _categoryService.GetAll();
+
+            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
+            {
+                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+            });
+            return Json(categories);
         }
     }
 }
