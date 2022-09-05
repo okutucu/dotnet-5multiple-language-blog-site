@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Entities.Dtos;
@@ -33,14 +34,13 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             return PartialView("_CategoryAddPartial");
         }
-
         [HttpPost]
         public async Task<IActionResult> Add(CategoryAddDto categoryAddDto)
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.Add(categoryAddDto, "Alper Tunga");
-                if (result.ResultStatus==ResultStatus.Success)
+                var result = await _categoryService.Add(categoryAddDto, "Oğuzhan Kutucu");
+                if (result.ResultStatus == ResultStatus.Success)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
                     {
@@ -61,22 +61,18 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         public async Task<JsonResult> GetAllCategories()
         {
             var result = await _categoryService.GetAllByNonDeleted();
-
             var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
             {
-                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+                ReferenceHandler = ReferenceHandler.Preserve
             });
             return Json(categories);
         }
-
 
         [HttpPost]
         public async Task<JsonResult> Delete(int categoryId)
         {
             var result = await _categoryService.Delete(categoryId, "Oğuzhan Kutucu");
-
             var deletedCategory = JsonSerializer.Serialize(result.Data);
-
             return Json(deletedCategory);
         }
     }
