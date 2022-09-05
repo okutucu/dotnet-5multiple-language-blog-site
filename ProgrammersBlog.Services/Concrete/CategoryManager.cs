@@ -161,5 +161,24 @@ namespace ProgrammersBlog.Services.Concrete
             }
             return new Result(ResultStatus.Error, "Böyle bir kategori bulunamadı.");
         }
+
+        public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDto(int categoryId)
+        {
+            bool result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
+
+            if(result)
+            {
+                Category category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
+
+                CategoryUpdateDto categoryUpdateDto = _mapper.Map<CategoryUpdateDto>(category);
+
+                return new DataResult<CategoryUpdateDto>(ResultStatus.Success, categoryUpdateDto);
+            }
+            else
+            {
+                return new DataResult<CategoryUpdateDto>(ResultStatus.Error,"Böyle bir kategori bulunamadı.", null);
+            }
+
+        }
     }
 }

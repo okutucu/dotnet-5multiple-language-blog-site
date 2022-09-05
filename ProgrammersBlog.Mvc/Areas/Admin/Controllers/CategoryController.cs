@@ -68,6 +68,23 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             return Json(categories);
         }
 
+
+
+        [HttpGet]
+        public async IActionResult Update(int categoryId)
+        {
+           var result = await _categoryService.GetCategoryUpdateDto(categoryId);
+
+            if(result.ResultStatus == ResultStatus.Success)
+            {
+                return PartialView("_CategoryUpdatepartial", result.Data);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost]
         public async Task<JsonResult> Delete(int categoryId)
         {
