@@ -71,7 +71,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public async IActionResult Update(int categoryId)
+        public async Task<IActionResult> Update(int categoryId)
         {
            var result = await _categoryService.GetCategoryUpdateDto(categoryId);
 
