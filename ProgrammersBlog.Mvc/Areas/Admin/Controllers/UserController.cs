@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos;
+using ProgrammersBlog.Mvc.Areas.Admin.Models;
 using ProgrammersBlog.Shared.Utilities.Extensions;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 
@@ -19,10 +22,13 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _env;
+        private readonly IMapper _mapper;
 
-        public UserController(UserManager<User> userManager)
+        public UserController(UserManager<User> userManager, IMapper mapper, IWebHostEnvironment env)
         {
             _userManager = userManager;
+            _mapper = mapper;
+            _env = env;
         }
 
         public async Task<IActionResult> Index()
@@ -40,6 +46,61 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         public  IActionResult Add()
         {
             return PartialView("_UserAddPartial");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(UserAddDto userAddDto)
+        {
+            if (ModelState.IsValid)
+            {
+                userAddDto.Picture = await ImageUpload(userAddDto);
+                User user = _mapper.Map<User>(userAddDto);
+
+
+                IdentityResult result = await _userManager.CreateAsync(user,userAddDto.Password);
+
+                if (result.Succeeded)
+                {
+                    string userAddAjaxModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
+                    {
+                        UserDto = new UserDto
+                        {
+                            ResultStatus = ResultStatus.Success,
+                            Message = $"{user.UserName} adlı kullanıcı adına sahip kullanıcı, başarılı bir şekilde eklenmiştir." ,
+                            User = user
+                        },
+                        UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial",userAddDto)
+                    });
+
+                    return Json(userAddAjaxModel);
+                }
+                else
+                {
+                    foreach(IdentityError error in result.Errors)
+                    {
+                        ModelState.AddModelError("",error.Description);
+                    }
+
+                    string userAddAjaxErrorModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
+                    {
+                        UserAddDto = userAddDto,
+                        UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
+                    });
+
+                    return Json(userAddAjaxErrorModel);
+                 
+                }
+
+            }
+            string userAddAjaxModelStateErrorModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
+            {
+                UserAddDto = userAddDto,
+                UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
+            });
+
+            return Json(userAddAjaxModelStateErrorModel);
+
 
         }
 
