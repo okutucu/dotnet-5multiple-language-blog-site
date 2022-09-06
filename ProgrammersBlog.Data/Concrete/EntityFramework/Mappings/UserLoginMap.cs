@@ -9,7 +9,7 @@ using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
 {
-    public class UserLoginMap : IEntityTypeConfiguration<UserLogin>
+    public class UserLoginMap:IEntityTypeConfiguration<UserLogin>
     {
         public void Configure(EntityTypeBuilder<UserLogin> builder)
         {

@@ -9,7 +9,7 @@ using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
 {
-    public class UserTokenMap : IEntityTypeConfiguration<UserToken>
+    public class UserTokenMap:IEntityTypeConfiguration<UserToken>
     {
         public void Configure(EntityTypeBuilder<UserToken> builder)
         {

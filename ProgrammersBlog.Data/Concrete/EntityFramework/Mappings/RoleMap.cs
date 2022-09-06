@@ -1,4 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProgrammersBlog.Entities.Concrete;
 
@@ -21,8 +26,8 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
             builder.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
 
             // Limit the size of columns to use efficient database types
-            builder.Property(u => u.Name).HasMaxLength(50);
-            builder.Property(u => u.NormalizedName).HasMaxLength(50);
+            builder.Property(u => u.Name).HasMaxLength(100);
+            builder.Property(u => u.NormalizedName).HasMaxLength(100);
 
             // The relationships between Role and other entity types
             // Note that these relationships are configured with no navigation properties

@@ -15,7 +15,6 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
         {
             builder.Property(u => u.Picture).IsRequired();
             builder.Property(u => u.Picture).HasMaxLength(250);
-
             // Primary key
             builder.HasKey(u => u.Id);
 
@@ -49,7 +48,6 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
 
             // Each User can have many entries in the UserRole join table
             builder.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
-
         }
     }
 }
