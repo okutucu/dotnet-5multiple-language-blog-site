@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos;
-using ProgrammersBlog.Mvc.Areas.Admin.Models;
 using ProgrammersBlog.Shared.Utilities.Extensions;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
+using System;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using ProgrammersBlog.Mvc.Areas.Admin.Models;
 
 namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 {
-
     [Area("Admin")]
     public class UserController : Controller
     {
@@ -24,83 +23,85 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly IMapper _mapper;
 
-        public UserController(UserManager<User> userManager, IMapper mapper, IWebHostEnvironment env)
+        public UserController(UserManager<User> userManager, IWebHostEnvironment env, IMapper mapper)
         {
             _userManager = userManager;
-            _mapper = mapper;
             _env = env;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<User> users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.ToListAsync();
             return View(new UserListDto
             {
                 Users = users,
-                ResultStatus =ResultStatus.Success
+                ResultStatus = ResultStatus.Success
             });
-
         }
-
         [HttpGet]
-        public  IActionResult Add()
+        public async Task<JsonResult> GetAllUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userListDto =JsonSerializer.Serialize(new UserListDto
+            {
+                Users = users,
+                ResultStatus = ResultStatus.Success
+            },new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+            return Json(userListDto);
+        }
+        [HttpGet]
+        public IActionResult Add()
         {
             return PartialView("_UserAddPartial");
-
         }
-
         [HttpPost]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
         {
             if (ModelState.IsValid)
             {
                 userAddDto.Picture = await ImageUpload(userAddDto);
-                User user = _mapper.Map<User>(userAddDto);
-
-
-                IdentityResult result = await _userManager.CreateAsync(user,userAddDto.Password);
-
+                var user = _mapper.Map<User>(userAddDto);
+                var result = await _userManager.CreateAsync(user, userAddDto.Password);
                 if (result.Succeeded)
                 {
-                    string userAddAjaxModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
+                    var userAddAjaxModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
                     {
                         UserDto = new UserDto
                         {
                             ResultStatus = ResultStatus.Success,
-                            Message = $"{user.UserName} adlı kullanıcı adına sahip kullanıcı, başarılı bir şekilde eklenmiştir." ,
+                            Message = $"{user.UserName} adlı kullanıcı adına sahip, kullanıcı başarıyla eklenmiştir.",
                             User = user
                         },
-                        UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial",userAddDto)
+                        UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
                     });
-
                     return Json(userAddAjaxModel);
                 }
                 else
                 {
-                    foreach(IdentityError error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("",error.Description);
                     }
 
-                    string userAddAjaxErrorModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
+                    var userAddAjaxErrorModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
                     {
                         UserAddDto = userAddDto,
                         UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
                     });
-
                     return Json(userAddAjaxErrorModel);
-                 
                 }
-
+                
             }
-            string userAddAjaxModelStateErrorModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
+            var userAddAjaxModelStateErrorModel = JsonSerializer.Serialize(new UserAddAjaxViewModel
             {
                 UserAddDto = userAddDto,
                 UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
             });
-
             return Json(userAddAjaxModelStateErrorModel);
-
 
         }
 
@@ -108,28 +109,20 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             // ~/img/user.Picture
             string wwwroot = _env.WebRootPath;
-            // oguzhankutucu
-            string userFileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);
-            // .png
+            // alpertunga     
+            // string fileName2 = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);
+            //.png
             string fileExtension = Path.GetExtension(userAddDto.PictureFile.FileName);
-            /* 
-                OğuzhanKutucu_587_5_38_12_3_10_2020.png
-                KaanKutucu_601_5_38_12_3_10_2022.png
-            */
             DateTime dateTime = DateTime.Now;
-
-            string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}_{userFileName}{fileExtension}";
-
+            // AlperTunga_587_5_38_12_3_10_2020.png
+            string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
             var path = Path.Combine($"{wwwroot}/img", fileName);
-            await using(FileStream stream = new FileStream(path,FileMode.Create))
+            await using (var stream = new FileStream(path, FileMode.Create))
             {
                 await userAddDto.PictureFile.CopyToAsync(stream);
             }
 
-            return fileName;
-
+            return fileName; // AlperTunga_587_5_38_12_3_10_2020.png - "~/img/user.Picture"
         }
-
-
     }
 }

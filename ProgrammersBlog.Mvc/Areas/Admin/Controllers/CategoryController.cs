@@ -40,7 +40,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _categoryService.Add(categoryAddDto, "Oğuzhan Kutucu");
-                if (result.ResultStatus == ResultStatus.Success)
+                if (result.ResultStatus==ResultStatus.Success)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
                     {
@@ -57,27 +57,13 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             return Json(categoryAddAjaxErrorModel);
 
         }
-
-        public async Task<JsonResult> GetAllCategories()
-        {
-            var result = await _categoryService.GetAllByNonDeleted();
-            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve
-            });
-            return Json(categories);
-        }
-
-
-
         [HttpGet]
         public async Task<IActionResult> Update(int categoryId)
         {
-           var result = await _categoryService.GetCategoryUpdateDto(categoryId);
-
-            if(result.ResultStatus == ResultStatus.Success)
+            var result = await _categoryService.GetCategoryUpdateDto(categoryId);
+            if (result.ResultStatus==ResultStatus.Success)
             {
-                return PartialView("_CategoryUpdatepartial", result.Data);
+                return PartialView("_CategoryUpdatePartial",result.Data);
             }
             else
             {
@@ -108,6 +94,15 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 
         }
 
+        public async Task<JsonResult> GetAllCategories()
+        {
+            var result = await _categoryService.GetAllByNonDeleted();
+            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+            return Json(categories);
+        }
 
         [HttpPost]
         public async Task<JsonResult> Delete(int categoryId)

@@ -2,7 +2,7 @@
 @model ProgrammersBlog.Entities.Dtos.UserListDto
 @{
     Layout = "_Layout";
-    ViewBag.Title = "Kullancılar Index";
+    ViewBag.Title = "Kullanıcılar Index";
 }
 @if (Model.ResultStatus == ResultStatus.Success)
 {
@@ -10,7 +10,7 @@
     <div class="card mb-4 mt-2">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
-                                Kullancılar
+                                Kullanıcılar
                             </div>
         <div class="card-body">
             <div class="spinner-border" role="status" style="display: none;">
@@ -23,17 +23,17 @@
                         <th>ID</th>
                         <th>Kullanıcı Adı</th>
                         <th>E-Posta Adresi</th>
-                        <th>Telefon No</th>
+                        <th>Telefon Numarası</th>
                         <th>Resim</th>
                         <th>İşlemler</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
-                       <th>ID</th>
+                        <th>ID</th>
                         <th>Kullanıcı Adı</th>
                         <th>E-Posta Adresi</th>
-                        <th>Telefon No</th>
+                        <th>Telefon Numarası</th>
                         <th>Resim</th>
                         <th>İşlemler</th>
                     </tr>
@@ -46,9 +46,9 @@
                             <td>@user.UserName</td>
                             <td>@user.Email</td>
                             <td>@user.PhoneNumber</td>
-                            <td><img src="~/img/@user.Picture" style="max-height:50px; max-width:50px"></td>
+                            <td><img src="~/img/@user.Picture" alt="@user.UserName" style="max-height: 50px; max-width: 50px;"/></td>
                             <td>
-                                <button class="btn btn-primary btn-sm btn-update"  data-id="@user.Id"><span class="fas fa-edit"></span></button>
+                                <button class="btn btn-primary btn-sm btn-update" data-id="@user.Id"><span class="fas fa-edit"></span></button>
                                 <button class="btn btn-danger btn-sm btn-delete" data-id="@user.Id"><span class="fas fa-minus-circle"></span></button>
                             </td>
                         </tr>
