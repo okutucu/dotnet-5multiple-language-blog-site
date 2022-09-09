@@ -1,4 +1,4 @@
-﻿ using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -137,6 +137,13 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 return Json(deletedUserErrorModel);
             }
         }
+
+        public async Task<PartialViewResult> Update(int userId)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
+            return PartialView("_UserUpdatePartial", userUpdateDto);
+        }
         public async Task<string> ImageUpload(UserAddDto userAddDto)
         {
             // ~/img/user.Picture
@@ -155,6 +162,23 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             }
 
             return fileName; // AlperTunga_587_5_38_12_3_10_2020.png - "~/img/user.Picture"
+        }
+
+        public bool ImageDelete(string pictureName)
+        {
+            string wwwroot = _env.WebRootPath;
+            string fileToDelete = Path.Combine($"{wwwroot}/image",pictureName);
+
+            if (System.IO.File.Exists(fileToDelete))
+            {
+                System.IO.File.Delete(fileToDelete);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }
