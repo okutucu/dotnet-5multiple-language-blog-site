@@ -61,7 +61,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
                 Picture = "defaultUser.png",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                SecurityStamp = new Guid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString()
             };
 
             adminUser.PasswordHash = CreatePasswordHash(adminUser, "adminuser");
@@ -69,7 +69,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
 
             User editorUser = new User
             {
-                Id = 1,
+                Id = 2,
                 UserName = "editoruser",
                 NormalizedUserName = "EDITORUSER",
                 Email = "editoruser@gmail.com",
@@ -78,7 +78,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
                 Picture = "defaultUser.png",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                SecurityStamp = new Guid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString()
             };
             editorUser.PasswordHash = CreatePasswordHash(editorUser, "editoruser");
 
