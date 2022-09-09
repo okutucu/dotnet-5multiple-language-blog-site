@@ -13,6 +13,7 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Giriş Yap</h3></div>
                                     <div class="card-body">
                                         <form asp-controller="User" asp-action="Login" method="post">
+                                            <div asp-validation-summary="All"></div>
                                             <div class="form-group">
                                                 <label class="small mb-1" asp-for="Email">Email</label>
                                                 <input class="form-control py-4" asp-for="Email" type="email" placeholder="Lütfen eposta adresinizi giriniz. " />
@@ -20,7 +21,7 @@
                                             </div>
                                          <div class="form-group">
                                                 <label class="small mb-1" asp-for="Password">Password</label>
-                                                <input class="form-control py-4" asp-for="Password" type="email" placeholder="Lütfen şifreinizi giriniz. " />
+                                                <input class="form-control py-4" asp-for="Password" type="password" placeholder="Lütfen şifrenizi giriniz. " />
                                                 <span asp-validation-for="Password" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
