@@ -40,6 +40,15 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 ResultStatus = ResultStatus.Success
             });
         }
+
+        [HttpGet]
+        public IActionResult UserLogin()
+        {
+            return View();
+        }
+
+
+
         [HttpGet]
         public async Task<JsonResult> GetAllUsers()
         {
