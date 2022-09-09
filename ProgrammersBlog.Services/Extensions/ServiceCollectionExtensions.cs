@@ -18,25 +18,19 @@ namespace ProgrammersBlog.Services.Extensions
         public static IServiceCollection LoadMyServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddDbContext<ProgrammersBlogContext>();
-            serviceCollection.AddIdentity<User, Role>(opt =>
+            serviceCollection.AddIdentity<User, Role>(options =>
             {
-
                 // User Password Options
-
-                opt.Password.RequireDigit = false;
-                opt.Password.RequiredLength = 5;
-                opt.Password.RequiredUniqueChars = 0;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireLowercase = false;
-                opt.Password.RequireUppercase = false;
-
-                // User Username and Email Options 
-
-                opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+$";
-                opt.User.RequireUniqueEmail = true;
-
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                // User Username and Email Options
+                options.User.AllowedUserNameCharacters= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+$";
+                options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ProgrammersBlogContext>();
-
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<ICategoryService, CategoryManager>();
             serviceCollection.AddScoped<IArticleService, ArticleManager>();

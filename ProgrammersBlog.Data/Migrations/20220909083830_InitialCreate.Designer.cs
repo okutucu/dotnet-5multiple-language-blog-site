@@ -10,7 +10,7 @@ using ProgrammersBlog.Data.Concrete.EntityFramework.Contexts;
 namespace ProgrammersBlog.Data.Migrations
 {
     [DbContext(typeof(ProgrammersBlogContext))]
-    [Migration("20220906095919_InitialCreate")]
+    [Migration("20220909083830_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,12 +158,12 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 1,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2022, 9, 6, 12, 59, 18, 115, DateTimeKind.Local).AddTicks(9472),
+                            CreatedDate = new DateTime(2022, 9, 9, 11, 38, 29, 913, DateTimeKind.Local).AddTicks(7175),
                             Description = "C# Programlama Dili ile İlgili En Güncel Bilgiler",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(805),
+                            ModifiedDate = new DateTime(2022, 9, 9, 11, 38, 29, 913, DateTimeKind.Local).AddTicks(9696),
                             Name = "C#",
                             Note = "C# Blog Kategorisi"
                         },
@@ -171,12 +171,12 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 2,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2086),
+                            CreatedDate = new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1702),
                             Description = "C++ Programlama Dili ile İlgili En Güncel Bilgiler",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2090),
+                            ModifiedDate = new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1708),
                             Name = "C++",
                             Note = "C++ Blog Kategorisi"
                         },
@@ -184,12 +184,12 @@ namespace ProgrammersBlog.Data.Migrations
                         {
                             Id = 3,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2103),
+                            CreatedDate = new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1728),
                             Description = "JavaScript Programlama Dili ile İlgili En Güncel Bilgiler",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2107),
+                            ModifiedDate = new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1734),
                             Name = "JavaScript",
                             Note = "JavaScript Blog Kategorisi"
                         });

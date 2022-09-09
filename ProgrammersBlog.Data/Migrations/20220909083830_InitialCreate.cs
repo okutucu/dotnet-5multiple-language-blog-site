@@ -248,17 +248,17 @@ namespace ProgrammersBlog.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedByName", "CreatedDate", "Description", "IsActive", "IsDeleted", "ModifiedByName", "ModifiedDate", "Name", "Note" },
-                values: new object[] { 1, "InitialCreate", new DateTime(2022, 9, 6, 12, 59, 18, 115, DateTimeKind.Local).AddTicks(9472), "C# Programlama Dili ile İlgili En Güncel Bilgiler", true, false, "InitialCreate", new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(805), "C#", "C# Blog Kategorisi" });
+                values: new object[] { 1, "InitialCreate", new DateTime(2022, 9, 9, 11, 38, 29, 913, DateTimeKind.Local).AddTicks(7175), "C# Programlama Dili ile İlgili En Güncel Bilgiler", true, false, "InitialCreate", new DateTime(2022, 9, 9, 11, 38, 29, 913, DateTimeKind.Local).AddTicks(9696), "C#", "C# Blog Kategorisi" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedByName", "CreatedDate", "Description", "IsActive", "IsDeleted", "ModifiedByName", "ModifiedDate", "Name", "Note" },
-                values: new object[] { 2, "InitialCreate", new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2086), "C++ Programlama Dili ile İlgili En Güncel Bilgiler", true, false, "InitialCreate", new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2090), "C++", "C++ Blog Kategorisi" });
+                values: new object[] { 2, "InitialCreate", new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1702), "C++ Programlama Dili ile İlgili En Güncel Bilgiler", true, false, "InitialCreate", new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1708), "C++", "C++ Blog Kategorisi" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedByName", "CreatedDate", "Description", "IsActive", "IsDeleted", "ModifiedByName", "ModifiedDate", "Name", "Note" },
-                values: new object[] { 3, "InitialCreate", new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2103), "JavaScript Programlama Dili ile İlgili En Güncel Bilgiler", true, false, "InitialCreate", new DateTime(2022, 9, 6, 12, 59, 18, 116, DateTimeKind.Local).AddTicks(2107), "JavaScript", "JavaScript Blog Kategorisi" });
+                values: new object[] { 3, "InitialCreate", new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1728), "JavaScript Programlama Dili ile İlgili En Güncel Bilgiler", true, false, "InitialCreate", new DateTime(2022, 9, 9, 11, 38, 29, 914, DateTimeKind.Local).AddTicks(1734), "JavaScript", "JavaScript Blog Kategorisi" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_CategoryId",

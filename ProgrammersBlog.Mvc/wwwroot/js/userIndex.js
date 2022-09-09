@@ -168,7 +168,7 @@
 
     /* Ajax POST / Posting the FormData as CategoryAddDto ends here. */
 
-    /* Ajax POST / Deleting a Category starts from here */
+    /* Ajax POST / Deleting a User starts from here */
 
     $(document).on('click',
         '.btn-delete',
@@ -176,10 +176,10 @@
             event.preventDefault();
             const id = $(this).attr('data-id');
             const tableRow = $(`[name="${id}"]`);
-            const categoryName = tableRow.find('td:eq(1)').text();
+            const userName = tableRow.find('td:eq(1)').text();
             Swal.fire({
                 title: 'Silmek istediğinize emin misiniz?',
-                text: `${categoryName} adlı kategori silinicektir!`,
+                text: `${userName} adlı kullanıcı silinicektir!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -191,23 +191,23 @@
                     $.ajax({
                         type: 'POST',
                         dataType: 'json',
-                        data: { categoryId: id },
-                        url: '/Admin/Category/Delete/',
+                        data: { userId: id },
+                        url: '/Admin/User/Delete/',
                         success: function (data) {
-                            const categoryDto = jQuery.parseJSON(data);
-                            if (categoryDto.ResultStatus === 0) {
+                            const userDto = jQuery.parseJSON(data);
+                            if (userDto.ResultStatus === 0) {
                                 Swal.fire(
                                     'Silindi!',
-                                    `${categoryDto.Category.Name} adlı kategori başarıyla silinmiştir.`,
+                                    `${userDto.User.UserName} adlı kullanıcı başarıyla silinmiştir.`,
                                     'success'
                                 );
 
-                                tableRow.fadeOut(3500);
+                                dataTable.row(tableRow).remove().draw();
                             } else {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Başarısız İşlem!',
-                                    text: `${categoryDto.Message}`,
+                                    text: `${userDto.Message}`,
                                 });
                             }
                         },
