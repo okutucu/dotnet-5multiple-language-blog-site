@@ -10,8 +10,6 @@ namespace ProgrammersBlog.Entities.Dtos
 {
     public class UserLoginDto
     {
-
-        public string UserName { get; set; }
         [DisplayName("E-Posta Adresi")]
         [Required(ErrorMessage = "{0} boş geçilmemelidir.")]
         [MaxLength(100, ErrorMessage = "{0} {1} karakterden büyük olmamalıdır.")]
@@ -24,9 +22,7 @@ namespace ProgrammersBlog.Entities.Dtos
         [MinLength(5, ErrorMessage = "{0} {1} karakterden küçük olmamalıdır.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
         [DisplayName("Beni Hatırla")]
         public bool RememberMe { get; set; }
-
     }
 }

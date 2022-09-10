@@ -17,7 +17,8 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Contexts
         public DbSet<Comment> Comments { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString: @"Server=OGUZ1995\OGUZ;Database=BlogDb;Integrated Security=true;");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\ProjectsV13;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
