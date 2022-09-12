@@ -334,6 +334,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 {
                     var result = await _userManager.ChangePasswordAsync(user, userPasswordChangeDto.CurrentPassword,
                         userPasswordChangeDto.NewPassword);
+
                     if (result.Succeeded)
                     {
                         await _userManager.UpdateSecurityStampAsync(user);
@@ -341,6 +342,15 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                         await _signInManager.PasswordSignInAsync(user, userPasswordChangeDto.NewPassword, true, false);
                         TempData.Add("SuccessMessage", $"Şifreniz başarıyla değiştirilmiştir.");
                         return View();
+                    }
+                    else
+                    {
+                        foreach(var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+
+                        return View(userPasswordChangeDto);
                     }
                 }
                 else
